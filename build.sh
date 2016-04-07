@@ -153,16 +153,13 @@ BRANCH="${BRANCH//\//-}"   # Replace all slashes with dashes
 # Get the GIT commit description
 COMMIT="$(git describe --always --dirty)"
 
-# Add the build identifer to the release identifier
-RELEASE="${RELEASE}-${BUILD}"
-
 # Number of days that may pass between releasing an updating
 PRIORITY=1
 
 update() {
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITEDIR}" \
-       GLUON_RELEASE="${RELEASE}-${BRANCH}" \
+       GLUON_RELEASE="${RELEASE}-${BUILD}-${BRANCH}" \
        GLUON_BRANCH="${BRANCH}" \
        GLUON_PRIORITY="${PRIORITY}" \
        update
@@ -171,8 +168,7 @@ update() {
     echo "--- Update Gluon Dependencies for target: ${TARGET}"
     make ${MAKEOPTS} \
          GLUON_SITEDIR="${SITEDIR}" \
-         GLUON_RELEASE="${RELEASE}" \
-         GLUON_RELEASE="${RELEASE}-${BRANCH}" \
+         GLUON_RELEASE="${RELEASE}-${BUILD}-${BRANCH}" \
          GLUON_PRIORITY="${PRIORITY}" \
          GLUON_TARGET="${TARGET}" \
          clean
@@ -184,8 +180,7 @@ download() {
     echo "--- Download Gluon Dependencies for target: ${TARGET}"
     make ${MAKEOPTS} \
          GLUON_SITEDIR="${SITEDIR}" \
-         GLUON_RELEASE="${RELEASE}" \
-         GLUON_RELEASE="${RELEASE}-${BRANCH}" \
+         GLUON_RELEASE="${RELEASE}-${BUILD}-${BRANCH}" \
          GLUON_PRIORITY="${PRIORITY}" \
          GLUON_TARGET="${TARGET}" \
          download
@@ -201,7 +196,7 @@ build() {
       development)
         make ${MAKEOPTS} \
              GLUON_SITEDIR="${SITEDIR}" \
-             GLUON_RELEASE="${RELEASE}-${BRANCH}" \
+             GLUON_RELEASE="${RELEASE}-${BUILD}-${BRANCH}" \
              GLUON_BRANCH="${BRANCH}" \
              GLUON_PRIORITY="${PRIORITY}" \
              GLUON_TARGET="${TARGET}" \
@@ -211,7 +206,7 @@ build() {
       *)
         make ${MAKEOPTS} \
              GLUON_SITEDIR="${SITEDIR}" \
-             GLUON_RELEASE="${RELEASE}-${BRANCH}" \
+             GLUON_RELEASE="${RELEASE}-${BUILD}-${BRANCH}" \
              GLUON_TARGET="${TARGET}" \
              all
       ;;
@@ -221,16 +216,17 @@ build() {
   echo "--- Build Gluon Manifest"
   make ${MAKEOPTS} \
        GLUON_SITEDIR="${SITEDIR}" \
-       GLUON_RELEASE="${RELEASE}-${BRANCH}" \
+       GLUON_RELEASE="${RELEASE}-${BUILD}-${BRANCH}" \
        GLUON_BRANCH="${BRANCH}" \
        GLUON_PRIORITY="${PRIORITY}" \
        manifest
 
   echo "--- Write Build file"
   cat > images/build <<EOF
+DATE=$(date '+%Y-%m-%d- %H:%M:%S')
 VERSION=$(cat "${SITEDIR}/release")
-BUILD=${BUILD}
 RELEASE=${RELEASE}
+BUILD=${BUILD}
 BRANCH=${BRANCH}
 COMMIT=${COMMIT}
 HOST=$(uname -n)
@@ -274,7 +270,7 @@ upload() {
       mkdir \
           --parents \
           --verbose \
-          "firmware/${TARGET}/${RELEASE}"
+          "firmware/${TARGET}/${RELEASE}-${BUILD}"
 
   # Copy images to server
   rsync \
@@ -284,7 +280,7 @@ upload() {
       --progress \
       --rsh="${SSH}" \
       "images/" \
-      "${DEPLOYMENT_USER}@${DEPLOYMENT_SERVER}:firmware/${TARGET}/${RELEASE}"
+      "${DEPLOYMENT_USER}@${DEPLOYMENT_SERVER}:firmware/${TARGET}/${RELEASE}-${BUILD}"
 
   # Link latest upload in target to 'current'
   ${SSH} \
@@ -294,7 +290,7 @@ upload() {
           --symbolic \
           --force \
           --no-target-directory \
-          "${RELEASE}" \
+          "${RELEASE}-${BUILD}" \
           "firmware/${TARGET}/current"
 }
 
