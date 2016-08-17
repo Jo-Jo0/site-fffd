@@ -49,14 +49,12 @@ GLUON_SITE_PACKAGES += \
   kmod-usb2 \
   kmod-usb-hid \
   kmod-usb-net \
-  kmod-usb-net-asix \
-  kmod-usb-net-dm9601-ether \
-  kmod-r8169 \
-  usbutils
+  usbutils \
+  kmod-usb-net-asix-ax88179
 endif
 
 # Allow overriding the release number from the command line
-GLUON_RELEASE ?= snapshot-$(shell date '+%Y%m%d%H%M%S')
+GLUON_RELEASE ?= jo-jo-$(shell date '+%Y%m%d%H%M%S')
 
 # Default priority for updates.
 GLUON_PRIORITY ?= 0
