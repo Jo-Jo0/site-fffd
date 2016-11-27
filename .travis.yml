@@ -1,0 +1,6 @@
+install: 
+ - subversion
+ - libncurses-dev
+ - libz-dev
+
+script: make update && make 
