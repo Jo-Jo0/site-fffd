@@ -232,7 +232,7 @@ build() {
 
   echo "--- Write Build file"
   cat > "${SITEDIR}/output/images/build" <<EOF
-DATE=$(date '+%Y-%m-%d- %H:%M:%S')
+DATE=$(date '+%Y-%m-%d %H:%M:%S')
 VERSION=$(cat "${SITEDIR}/release")
 RELEASE=${RELEASE}
 BUILD=${BUILD}
