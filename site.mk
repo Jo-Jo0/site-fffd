@@ -13,15 +13,14 @@ GLUON_SITE_PACKAGES := \
   gluon-fffd-autokey \
   gluon-fffd-config-mode-mailinglist \
   gluon-fffd-wifi-aliases \
-  gluon-luci-theme \
-  gluon-luci-admin \
-  gluon-luci-autoupdater \
-  gluon-luci-portconfig \
-  gluon-luci-wifi-config \
-  gluon-luci-private-wifi \
-  gluon-luci-mesh-vpn-fastd \
-  gluon-luci-node-role \
-  gluon-next-node \
+  gluon-web-theme \
+  gluon-web-admin \
+  gluon-web-autoupdater \
+  gluon-web-portconfig \
+  gluon-web-wifi-config \
+  gluon-web-private-wifi \
+  gluon-web-mesh-vpn-fastd \
+  gluon-web-node-role \
   gluon-mesh-vpn-fastd \
   gluon-radvd \
   gluon-setup-mode \
