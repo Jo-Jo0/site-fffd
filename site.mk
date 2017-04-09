@@ -11,12 +11,10 @@ GLUON_SITE_PACKAGES := \
   gluon-ebtables-filter-multicast \
   gluon-ebtables-filter-ra-dhcp \
   gluon-fffd-autokey \
-  gluon-fffd-config-mode-mailinglist \
   gluon-fffd-wifi-aliases \
   gluon-web-theme \
   gluon-web-admin \
   gluon-web-autoupdater \
-  gluon-web-portconfig \
   gluon-web-wifi-config \
   gluon-web-private-wifi \
   gluon-web-mesh-vpn-fastd \
